@@ -67,6 +67,6 @@ PUSH
 
 
 ## git经典源码管理和版本维护开发应用模型
-![git版本管理和源码维护开发模型](/Picture/Git/git_developer_modle_for_team_menbers.git)
+![git_module](https://github.com/hzgosun/KMap/blob/master/Picture/Git/git_developer_modle_for_team_menbers.gif)
 
 
