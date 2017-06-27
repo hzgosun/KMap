@@ -69,4 +69,60 @@ PUSH
 ## git经典源码管理和版本维护开发应用模型
 ![git_module](https://github.com/hzgosun/KMap/blob/master/Picture/Git/git_developer_modle_for_team_menbers.gif)
 
+## git 常用命令
+
+```
+创建仓库，有两种办法：
+1， 一个是直接在任意一个目录下面执行，执行如下命令
+   git init
+2， 另外，可以直接 git clone 代码到本地。
+
+
+
+3，查看历史修改记录：
+git log 
+可以加参数：
+lenovo@lenovo-PC MINGW64 ~/Desktop/Kmap (master)
+$ git log --graph  --oneline
+* 3a337cf (HEAD -> master, origin/master, origin/HEAD) to add file of 经典开发版本管理和源码管理模型
+* 476904e Update Git简单教程.md
+* fd397b4 Update Git简单教程.md
+* 5c97295 Update Git简单教程.md
+* 0edfe6b Create Git简单教程.md
+* 2d1bc9a to change git_work_flow.git
+* 3ebd006 to add git_flow.jpg
+* 9364511 to add KMap excel
+* a26da9d to delete unuse file
+* 4155f84 to add hadoop file
+* 1473cca Delete TmpFile.md
+* f888eba to init the repository.
+* 98a724c Create README.md
+
+4，回复到某一个修改的版本
+两种方式，
+git reset 2d1bc9a （git log 中，前面得出的一串号码）
+git reset --hard 2d1bc9a
+
+5，添加到暂存区
+git  add  <file>
+git add --all
+
+6, 提交修改到仓库即，.git 文件夹
+仓库中只保存了文件的改动情况，所以.git 文件夹不可以动，要不然会找不到历史的版本。
+git commit -m "这次提交修改的原因，修改的内容，写清楚"
+
+
+7，克隆和拉取，推送
+git clone **.git
+git push origin master
+git pull origin master
+
+8, 显示仓库别名
+git remote -v 
+
+
+
+```
+
+
 
