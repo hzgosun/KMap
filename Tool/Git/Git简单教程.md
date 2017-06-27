@@ -13,5 +13,5 @@ Linux 开源内核，是由很多人共同开发的，git 的产生，最初是�
 ### 2，工作区，暂存区，索引（或者可以直接理解为仓库）  
 ![git_work_flow](https://github.com/hzgosun/KMap/blob/master/Picture/Git/git_work_flow.gif)
 
-### 3,
+### 3,Clone，Init,Branches,PULL,PUSH
 
