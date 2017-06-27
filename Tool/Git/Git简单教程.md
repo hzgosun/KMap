@@ -66,4 +66,7 @@ PUSH
 ```
 
 
+## git经典源码管理和版本维护开发应用模型
+![git版本管理和源码维护开发模型](/Picture/Git/git_developer_modle_for_team_menbers.git)
+
 
