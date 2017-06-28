@@ -120,6 +120,9 @@ git pull origin master
 git remote -v 
 
 
+9,git status 
+查看，现在的工作目录的状态
+
 
 ```
 
