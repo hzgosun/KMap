@@ -123,6 +123,15 @@ git remote -v
 9,git status 
 查看，现在的工作目录的状态
 
+10，让push 的时候免密码
+在git bash 执行如下命令
+ssh-keygen -t rsa -C "your email or your computer name"
+提示输入密码 或者目录部分，不用操作，直接回车
+
+执行后，会在 用户目录下， 比如C:/Users/ldl/.ssh 下
+生成两个文件id_rsa（私钥） 和id_rsa.pub（公钥）    （如果没有看到后缀，请设置文件系统里的查看，不要隐藏已知的后缀名）
+
+用文本编辑器打开 id_rsa.pub， 把里面的内容拷贝到githup 的 settings 下的sshkey 模块中。
 
 ```
 
