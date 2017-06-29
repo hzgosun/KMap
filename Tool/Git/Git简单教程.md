@@ -4,7 +4,7 @@
 分布式版本控制和源代码管理系统。
 Linux 开源内核，是由很多人共同开发的，git 的产生，最初是为了给Linux 内核管理源码的。
 ```
-## git安装
+## git安装（客户端的安装）
 [git官网，跳转](https://git-scm.com/)
 ```
 完整意义上说，应该是git 客户端的安装。
@@ -15,6 +15,9 @@ windows 下的安装，请直接到上面的链接git 官网下载安装：
 ## 注册githup 账号，初始化git 客户端配置
 [githup 官网](github.com)
 ```
+git 可以自己利用一台机器搭建git 服务器，但是相对中小型公司来说，
+这样维护起来比较麻烦，所以，比较常见的方式是托管到第三方的的git 服务器，比如githup 
+
 githup ，一个git 仓库的服务器， 仓库可以托管到githup 上。
 1，到githup 上注册一个账号，
 2，账号注册好后，
@@ -24,6 +27,16 @@ githup ，一个git 仓库的服务器， 仓库可以托管到githup 上。
 然后执行如下两个命令:
 git config --global  user.email "注册的邮箱账号"
 git config --global user.name "git 账号用户名"
+
+为了让之后向 githup  push 的时候免密码
+在git bash 执行如下命令
+ssh-keygen -t rsa -C "your email or your computer name"
+提示输入密码 或者目录部分，不用操作，直接回车
+
+执行后，会在 用户目录下， 比如C:/Users/ldl/.ssh 下
+生成两个文件id_rsa（私钥） 和id_rsa.pub（公钥）    （如果没有看到后缀，请设置文件系统里的查看，不要隐藏已知的后缀名）
+用文本编辑器打开 id_rsa.pub， 把里面的内容拷贝到githup 的 settings 下的sshkey 模块中。
+
 ```
 
 
@@ -123,15 +136,6 @@ git remote -v
 9,git status 
 查看，现在的工作目录的状态
 
-10，让push 的时候免密码
-在git bash 执行如下命令
-ssh-keygen -t rsa -C "your email or your computer name"
-提示输入密码 或者目录部分，不用操作，直接回车
-
-执行后，会在 用户目录下， 比如C:/Users/ldl/.ssh 下
-生成两个文件id_rsa（私钥） 和id_rsa.pub（公钥）    （如果没有看到后缀，请设置文件系统里的查看，不要隐藏已知的后缀名）
-
-用文本编辑器打开 id_rsa.pub， 把里面的内容拷贝到githup 的 settings 下的sshkey 模块中。
 
 ```
 
