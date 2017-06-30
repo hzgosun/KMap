@@ -134,6 +134,8 @@ $ git log --graph  --oneline
 git reset 2d1bc9a （git log 中，前面得出的一串号码）
 git reset --hard 2d1bc9a
 
+一个特殊的用法， git reset   后面不跟任何内容，则放弃当前添加到暂存区的内容
+
 5，添加到暂存区
 git  add  <file>
 git add --all
