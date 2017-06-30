@@ -59,8 +59,8 @@ ssh-keygen -t rsa -C "your email or your computer name"
 ```
 
 ## git经典源码管理和版本维护开发应用模型
-![git_module](https://github.com/hzgosun/KMap/blob/master/Picture/Git/git_developer_modle_for_team_menbers.gif)
-
+![git_module](https://github.com/hzgosun/KMap/blob/master/Picture/Git/git_developer_modle_for_team_menbers.gif)  
+[!参考链接](https://guides.github.com/introduction/flow/?utm_source=onboarding-series&utm_medium=email&utm_content=read-the-guide-cta&utm_campaign=learn-github-flow-email)
 
 
 
