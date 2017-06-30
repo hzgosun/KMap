@@ -14,9 +14,6 @@ Linux 开源内核，是由很多人共同开发的，git 的产生，最初是�
    （git 中，只要在git 仓库根目录中添加一个.gitignore 文件，把不需要的文件在git add 的时候过滤掉即可）
 5，git 引入branch 的概念，可以多个主线一起开发（见多的大多的项目，一般只有一个master 主线），也可能针对一分基本的代码，
     各个局点所不同的时候，可以轻松的引入多个分支。
-6，git 对冲突的处理： 
-   git 的主库，一般上
-
 ```
 ## git安装（客户端的安装）
 [git官网，跳转](https://git-scm.com/)
@@ -159,6 +156,22 @@ git remote -v
 
 
 ```
-
+## git 对冲突的处理
+```
+6，git 对冲突的处理： 
+   git 的主库，一般上是因为个人的本地的代码，和主库的代码，修改的的是同一个文件的同一个地方， 
+   或者git push 的 时候出现push 失败
+   提示错误类似如下：
+   To github.com:easesstone/knowledge.git
+   ! [rejected]        master -> master (non-fast-forward)
+   error: failed to push some refs to 'git@github.com:easesstone/knowledge.git'
+   hint: Updates were rejected because the tip of your current branch is behind
+   hint: its remote counterpart. Integrate the remote changes (e.g.
+   hint: 'git pull ...') before pushing again.
+   hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+   
+   或者git pull 的时候出现冲突：
+   
+```
 
 
