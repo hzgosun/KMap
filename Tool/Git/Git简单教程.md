@@ -159,8 +159,9 @@ git remote -v
 ## git 对冲突的处理
 ```
 6，git 对冲突的处理： 
-   git 的主库，一般上是因为个人的本地的代码，和主库的代码，修改的的是同一个文件的同一个地方， 
-   或者git push 的 时候出现push 失败
+   git 的主库，一般上是因为个人的本地的代码，和主库的代码，修改的的是同一个文件的同一个地方
+   （例如：同一个行同一个位置连个字符不一致，两个人修改同一个地方一个人先提交，另一个人后提交）
+   A，git push 的 时候出现push 失败， 此种情况下，先把主库的pull 下来，解决冲突，然后再push 到主库
    提示错误类似如下：
    To github.com:easesstone/knowledge.git
    ! [rejected]        master -> master (non-fast-forward)
@@ -171,6 +172,27 @@ git remote -v
    hint: See the 'Note about fast-forwards' in 'git push --help' for details.
    
    或者git pull 的时候出现冲突：
+   $ git pull origin master
+   $ git pull origin master
+   remote: Counting objects: 3, done.
+   remote: Compressing objects: 100% (1/1), done.
+   remote: Total 3 (delta 2), reused 3 (delta 2), pack-reused 0
+   Unpacking objects: 100% (3/3), done.
+   From github.com:easesstone/knowledge
+   * branch            master     -> FETCH_HEAD
+   523a885..b74a361  master     -> origin/master
+   Auto-merging other.md
+   CONFLICT (content): Merge conflict in other.md
+   Automatic merge failed; fix conflicts and then commit the result.
+
+   
+   这个时候，会在other.md 中显示两个版本的内容
+   类似如下： 这种情况下，手动编辑这个文件，把你需要保留的保留下来就可以了。
+  <<<<<<< HEAD
+  懂第哦懂懂懂2
+  =======
+  懂第哦懂懂懂1
+  >>>>>>> b74a3611ce55b5cf0e9558f1b199732dd79daf1e
    
 ```
 
