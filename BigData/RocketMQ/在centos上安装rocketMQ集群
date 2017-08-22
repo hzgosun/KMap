@@ -1,0 +1,143 @@
+安装rocketMQ
+一、	规划服务器
+规划三台虚拟机，一台安装NameServer，两台Master，没有slave。
+NameServer服务器：172.18.18.102（hostname:s102）
+两台Master服务器：172.18.18.100（hostname:s100）、172.18.18.101（hostname:s101）
+
+二、	开放rocketMQ端口
+检查是否正确安装jdk，java  –version
+rocketMQ默认使用3个端口：9876、10911、10912 。
+nameServer默认使用9876端口，master和slave默认使用10911端口、10912端口
+开放端口的命令：/sbin/iptables -I INPUT -p tcp --dport 9876 -j ACCEPT
+service iptables save            service iptables restart
+
+三、	配置/etc/hosts文件
+在/etc/hosts文件末尾增加主机名和127.0.0.1的映射
+127.0.0.1  localhost
+
+四、安装RocketMQ（以下操作需要在三台机子上都执行一遍）
+①、下载rocketMQ压缩包并上传到/opt/文件夹中
+②、解压rocketMQ压缩包，如：tar –zxvf rocketmq-3.2.6.tar.gz，并将解压出来的文件夹更名为rocketmq。
+③、配置环境变量：在/etc/profile文件最后添加： export ROCKETMQ_HOME=/opt/rocketmq
+export PATH=$PATH:$ROCKETMQ_HOME/bin
+export NAMESRV_ADDR="172.18.18.102:9876"
+   添加完成后，执行source /etc/profile 命令使修改生效
+④、修改文件权限：
+cd rocketmq/bin/
+chmod +x mqadmin mqbroker mqfiltersrv mqshutdown mqnamesrv
+
+五、启动NameServer（在主节点上启动nameServer）
+     cd /opt/rocketmq/bin/
+      nohup ./mqnamesrv –n 172.18.18.102:9876 > ./start.log 2>&1 &
+      cat start.log
+      通过jps查看进程中是否启动NameServer
+
+六、启动Broker（在两个Master上启动broker）
+    cd /opt/rocketmq/bin/
+     nohup ./mqbroker –n 172.18.18.102:9876 -c ../conf/2m-noslave/broker-a.properties >./start.log 2>&1 &
+     cat start.log
+     通过jps查看进程中是否启动
+七、添加rocketmq web控制台的war包到tomcat底下
+     tomcat安装在NameServer所在的服务器，访问的地址为：http://172.18.18.102:8080/rocketmq-console/cluster/list.do
+
+八、rocketMQ具体使用:
+http://jameswxx.iteye.com/blog/2091971
+   进入/RocketMQ/bin目录下，查看具体命令的使用：mqadmin help updateTopic
+   查看当前集群列表：mqadmin clusterList(单个nameServer情况下可以不加-n)
+   多个NameServer情况下，查看指令为：mqadmin clusterList –n 172.18.18.102:9876
+   查看当前topic列表：mqadmin topicList (单个nameServer情况下可以不加-n)
+   多个NameServer情况下，查看指令为：mqadmin topicList –n 172.18.18.102:9876
+   创建Topic：比如：updateTopic –b 172.18.18.100:10911 –n 172.18.18.102:9876 –t nihao 或者updateTopic –c DefaultCluster –n 172.18.18.102:9876 –t nihao
+   用mqadmin topicList查看topic是否创建成功
+com.alibaba.rocketmq.tools.command.topic.UpdateTopicSubCommand
+参数	是否必填	说明
+-b	如果-c为空，则必填	broker 地址，表示topic 建在该broker
+-c	如果-b为空，则必填	cluster 名称，表示topic 建在该集群（集群可通过clusterList 查询）
+-h	否	打印帮助
+-n	是	nameserve 服务地址列表，格式ip:port;ip:port;...
+-p	否 	指定新topic 的权限限制( W|R|WR )
+-r 	否	可读队列数（默认为8）
+-w	否	可写队列数（默认为8）
+-t	是	opic 名称（名称只能使用字符 ^[a-zA-Z0-9_-]+$ ）
+
+删除topic：mqadmin deleteTopic –c DefaultCluster  –n 172.18.18.102:9876  –t woshishabi
+类路径
+com.alibaba.rocketmq.tools.command.topic.DeleteTopicSubCommand
+参数 	是否必填	 说明
+-c	是	cluster 名称，表示删除某集群下的某个topic （集群可通过clusterList 查询）
+-h	否	打印帮助
+-n	是	nameserve 服务地址列表，格式ip:port;ip:port;…
+-t	是	topic 名称（名称只能使用字符 ^[a-zA-Z0-9_-]+$ ）
+
+查看topic的路由信息：mqadmin topicRoute  –t woshishabi  –n 172.18.18.102:9876
+类路径
+com.alibaba.rocketmq.tools.command.topic.TopicRouteSubCommand
+参数	是否必填	说明
+-t	是	topic 名称
+-h	否	打印帮助
+-n 	是	nameserve 服务地址列表，格式ip:port;ip:port;...
+
+
+查看topic的统计信息：mqadmin topicStatus  -t  woshishabi  -n 172.18.18.102:9876
+类路径
+com.alibaba.rocketmq.tools.command.topic.TopicStatsSubCommand
+参数	是否必填	说明
+-t	是	topic 名称
+-h	否	打印帮助
+-n 	是	nameserve 服务地址列表，格式ip:port;ip:port;...
+
+查看Broker统计信息：mqadmin brokerStatus –b 172.18.18.100:10911 –n 172.18.18.102:9876
+类路径
+com.alibaba.rocketmq.tools.command.broker.BrokerStatsSubCommanD
+参数	是否必填	说明
+-b	是	 broker 地址
+-h	否	打印帮助
+-n 	是	nameserve 服务地址列表，格式ip:port;ip:port;...
+
+创建（修订）订阅组：mqadmin updateSubGroup –c DefaultCluster –g woshiGroup –n 172.18.18.102:9876
+类路径
+com.alibaba.rocketmq.tools.command.consumer.UpdateSubGroupSubCommand
+参数	是否必填	说明
+-b	如果 –c 为空，则必填	broker 地址，表示订阅组建在该broker
+-c	如果 –b 为空，则必填	cluster名称，表示topic 建在该集群（集群可通过clusterList查询）
+-d	否 	是否容许广播方式消费
+-g	是 	订阅组名
+-i	否	从哪个broker 开始消费
+-m	否	是否容许从队列的最小位置开始消费，默认会设置为false
+-q	否	消费失败的消息放到一个重试队列，每个订阅组配置几个重试队列
+-r 	否 	重试消费最大次数，超过则投递到死信队列，不再投递，并报警
+-s	否	消费功能是否开启
+-w 	否	发现消息堆积后，将Consumer 的消费请求重定向到另外一台Slave 机器
+-h	否	打印帮助
+-n	是	nameserve 服务地址列表，格式ip:port;ip:port;...
+
+
+
+
+
+
+
+删除订阅组：mqadmin deleteSubGroup –c DefaultCluster –g woshiGroup –n 172.18.18.102:9876
+类路径
+com.alibaba.rocketmq.tools.command.consumer.DeleteSubscriptionGroupCommand
+参数	是否必填	说明
+-b 	如果–c 为空，则必填	broker 地址，表示订阅组建在该broker
+-c 	如果–b 为空，则必填	cluster 名称，表示topic建在该集群（集群可通过clusterList查询）
+-g	是	订阅组名
+-h	否	打印帮助
+-n 	是	nameserve 服务地址列表，格式ip:port;ip:port;...
+
+
+更新broker配置文件：
+指令
+updateBrokerConfig
+类路径
+com.alibaba.rocketmq.tools.command.broker.UpdateBrokerConfigSubCommand
+参数	是否必填	说明
+-b 	如果–c为空，则必填	broker 地址，表示订阅组建在该broker
+-c 	如果–b 为空，则必填	cluster名称，表示topic 建在该集群（集群可通过clusterList查询）
+-k 	是	 key 值
+-v	否	value 值
+-h	否	打印帮助
+-n 	是	nameserve 服务地址列表，格式ip:port;ip:port;...
+

@@ -1,0 +1,24 @@
+安装ElasticSearch搜索引擎
+一、	先安装java
+①	、检查系统中是否已经安装了java：
+  Java –version
+②	、安装JDK
+解压命令：tar –xvf  jdk-8u131-linux-x64.tar.gz
+在/etc/profile中配置环境变量：export JAVA_HOME=/opt/tool/jdk
+export PATH=$JAVA_HOME/bin:$PATH
+配置完成后：source /etc/profile
+
+
+二、	ElasticSearch的安装
+①	、将es压缩文件移到/opt中
+  移动命令：mv elasticsearch-2.1.1.tar.gz /opt
+②	、解压并重命名
+ 命令：tar –xvf elasticsearch-2.1.1.tar.gz   mv elasticsearch-2.1.1.tar.gz elasticsearch
+③	、因为用root用户运行es会报错，所以为了系统安全，需要单独创建一个用户使用elasticsearch
+ 命令：groupadd elsearch    useradd elsearch –g elsearch –p elasticsearch
+④	、更改elasticsearch文件夹及内部文件的所属用户及组为elsearch:elsearch
+命令：chown -R elsearch:elsearch elasticsearch
+⑤	、切换到elsearch用户再启动
+命令：su elsearch    cd elasticsearch/bin    ./elasticsearch
+⑥	、因为elasticsearch启动后会一直存在在界面上，所以可以让它在后台运行
+命令：./elasticsearch -d
